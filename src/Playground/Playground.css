@@ -1,0 +1,28 @@
+.playground {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.playground-row {
+    display: flex;
+}
+
+.playground.inactive:before {
+    content: '';
+    position: absolute;
+    z-index: 999;
+    display: block;
+    width: 100%;
+    height: 60vh;
+}
+
+h2.correct {
+    color: #83d683;
+}
+
+h2.incorrect {
+    color: #eb2323;
+}
+
+

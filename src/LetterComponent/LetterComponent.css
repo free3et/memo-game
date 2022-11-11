@@ -1,0 +1,44 @@
+.playground-row .letter_cell,
+.letter_cell.transparent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 84px;
+    margin: 5px;
+    padding: 5px;
+    background-repeat: no-repeat;
+    font-weight: 700;
+    font-size: 66px;
+    cursor: pointer;
+}
+
+.playground-row .letter_cell {
+    background-image: url('../assets/bg-letter-orange.png');
+    color: #1b1616;
+}
+
+.playground-row .letter_cell.transparent {
+    background-image: url('../assets/bg-letter-orange.png');
+    color: transparent;
+}
+
+.letter_cell.violet {
+    background-image: url('../assets/bg-letter.png');
+}
+
+.letter_cell.blue {
+    background-image: url('../assets/bg-letter-blue.png');
+}
+
+.letter_cell.yellow {
+    background-image: url('../assets/bg-letter-yellow.png');
+}
+
+.letter_cell.correct {
+    background-image: url('../assets/bg-letter-green.png');
+}
+
+.playground-row .letter_cell.incorrect {
+    background-image: url('../assets/bg-letter-red.png');
+}
