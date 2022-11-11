@@ -5,9 +5,12 @@ import { Playground } from "./Playground/Playground";
 function App() {
   let [isGameBegin, setBeginGame] = useState(false);
   let [randomLetter, setRandomLetter] = useState("");
+  let [restartGame, setRestartGame] = useState(false);
+  let [disabled, setDisabled] = useState(false);
 
   function beginGame() {
     setBeginGame(true);
+    setBeginGameBtn();
   }
 
   function showRandomLetter() {
@@ -20,6 +23,14 @@ function App() {
       setRandomLetter((randomLetter = "C"));
     } else {
       setRandomLetter((randomLetter = ""));
+    }
+  }
+
+  function playAgain(restart) {
+    if (restart) {
+      setRestartGame((restartGame = !restartGame));
+      setBeginGame(false);
+      setDisabled((disabled = !disabled));
     }
   }
 
@@ -37,13 +48,39 @@ function App() {
                 Find all <span>{randomLetter}</span> letters!
               </h1>
             </div>
-            <Playground randomLetter={randomLetter} />
+            <Playground
+              randomLetter={randomLetter}
+              onRestart={(restart) => {
+                playAgain(restart);
+              }}
+            />
           </>
         ) : (
           <div>
-            <button onClick={beginGame}>Start game</button>
+            <button
+              onClick={beginGame}
+              disabled={disabled}
+              className="begin-game"
+            >
+              Start game
+            </button>
           </div>
         )}
+        {restartGame ? (
+          <>
+            <div>
+              <h1>
+                Find all <span>{randomLetter}</span> letters!
+              </h1>
+            </div>
+            <Playground
+              randomLetter={randomLetter}
+              onRestart={(restart) => {
+                playAgain(restart);
+              }}
+            />
+          </>
+        ) : null}
       </main>
     </div>
   );

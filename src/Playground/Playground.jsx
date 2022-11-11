@@ -2,7 +2,7 @@ import { LetterComponent } from "../LetterComponent/LetterComponent";
 import { useState, useEffect } from "react";
 import "./Playground.css";
 
-export const Playground = ({ randomLetter }) => {
+export const Playground = ({ randomLetter, onRestart }) => {
   const COLUMN = 3;
   const ROWS = 3;
 
@@ -23,6 +23,7 @@ export const Playground = ({ randomLetter }) => {
   let [win, setWin] = useState(0);
   let [disabled, setDisabled] = useState("");
   let [restartBtn, setRestartBtn] = useState(``);
+  let [restart, setRestartEvent] = useState(false);
 
   function countLetters() {
     let cells = document.querySelectorAll(".letter_cell");
@@ -46,7 +47,12 @@ export const Playground = ({ randomLetter }) => {
       setMessage((message = "Wrong. You are lose((("));
       setClassName((classname = "incorrect"));
       setDisabled((disabled = "disabled"));
-      setRestartBtn(<button type="button">Restart</button>);
+      setRestartEvent((restart = !restart));
+      setRestartBtn(
+        <button type="button" onClick={(event) => onRestart(restart)}>
+          Restart
+        </button>
+      );
     }
     return rightAnswerCounter;
   }
@@ -58,8 +64,13 @@ export const Playground = ({ randomLetter }) => {
     if (countLetters() === rightAnswerCounter) {
       setWin(win + 1);
       setMessage((message = "Congratulations!!! You won!"));
+      setRestartEvent((restart = !restart));
       setRestartBtn(
-        <button className="restart_btn" type="button">
+        <button
+          className="restart_btn"
+          type="button"
+          onClick={(event) => onRestart(restart)}
+        >
           Restart
         </button>
       );
