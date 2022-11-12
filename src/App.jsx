@@ -8,9 +8,20 @@ function App() {
   let [restartGame, setRestartGame] = useState(false);
   let [disabled, setDisabled] = useState(false);
 
+  function totalGamesCount() {
+    let n = localStorage.getItem("total_games_count");
+    if (n === null) {
+      n = 0;
+    }
+    n++;
+
+    localStorage.setItem("total_games_count", n);
+    return n;
+  }
+  let [totalGamesCounter, setTotalGamesCounter] = useState(0);
+
   function beginGame() {
     setBeginGame(true);
-    setBeginGameBtn();
   }
 
   function showRandomLetter() {
@@ -26,12 +37,52 @@ function App() {
     }
   }
 
+  function renderPlayground() {
+    return (
+      <>
+        <div>
+          <h1>
+            Find all <span>{randomLetter}</span> letters!
+          </h1>
+          <h4>
+            You won <span>{localStorage.getItem("total_victories")}</span>{" "}
+            times. <br />
+            Total games: <span>{totalGamesCounter}</span>
+          </h4>
+        </div>
+        <Playground
+          randomLetter={randomLetter}
+          onRestart={(restart) => {
+            playAgain(restart);
+          }}
+          onWinGame={(win) => {
+            countVictories(win);
+          }}
+        />
+      </>
+    );
+  }
+
   function playAgain(restart) {
+    console.log(restart);
     if (restart) {
       setRestartGame((restartGame = !restartGame));
       setBeginGame(false);
       setDisabled((disabled = !disabled));
+      setTotalGamesCounter((totalGamesCounter = totalGamesCount()));
     }
+  }
+
+  function countVictories(win) {
+    console.log(win);
+    win = localStorage.getItem("total_victories");
+    if (win === null) {
+      win = 0;
+    }
+    win++;
+
+    localStorage.setItem("total_victories", win);
+    return win;
   }
 
   useEffect(() => {
@@ -42,45 +93,19 @@ function App() {
     <div className="App">
       <main>
         {isGameBegin ? (
-          <>
-            <div>
-              <h1>
-                Find all <span>{randomLetter}</span> letters!
-              </h1>
-            </div>
-            <Playground
-              randomLetter={randomLetter}
-              onRestart={(restart) => {
-                playAgain(restart);
-              }}
-            />
-          </>
+          renderPlayground()
         ) : (
           <div>
             <button
               onClick={beginGame}
-              disabled={disabled}
               className="begin-game"
+              disabled={disabled}
             >
               Start game
             </button>
           </div>
         )}
-        {restartGame ? (
-          <>
-            <div>
-              <h1>
-                Find all <span>{randomLetter}</span> letters!
-              </h1>
-            </div>
-            <Playground
-              randomLetter={randomLetter}
-              onRestart={(restart) => {
-                playAgain(restart);
-              }}
-            />
-          </>
-        ) : null}
+        {restartGame ? renderPlayground() : null}
       </main>
     </div>
   );

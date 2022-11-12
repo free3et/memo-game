@@ -2,7 +2,7 @@ import { LetterComponent } from "../LetterComponent/LetterComponent";
 import { useState, useEffect } from "react";
 import "./Playground.css";
 
-export const Playground = ({ randomLetter, onRestart }) => {
+export const Playground = ({ randomLetter, onRestart, onWinGame }) => {
   const COLUMN = 3;
   const ROWS = 3;
 
@@ -48,6 +48,8 @@ export const Playground = ({ randomLetter, onRestart }) => {
       setClassName((classname = "incorrect"));
       setDisabled((disabled = "disabled"));
       setRestartEvent((restart = !restart));
+      console.log(restart);
+
       setRestartBtn(
         <button type="button" onClick={(event) => onRestart(restart)}>
           Restart
@@ -62,14 +64,18 @@ export const Playground = ({ randomLetter, onRestart }) => {
     if (rightAnswerCounter === 0) return;
 
     if (countLetters() === rightAnswerCounter) {
-      setWin(win + 1);
+      setWin((win) => win + 1);
       setMessage((message = "Congratulations!!! You won!"));
       setRestartEvent((restart = !restart));
+      console.log(restart);
       setRestartBtn(
         <button
           className="restart_btn"
           type="button"
-          onClick={(event) => onRestart(restart)}
+          onClick={(event) => {
+            onRestart(restart);
+            onWinGame(win);
+          }}
         >
           Restart
         </button>
@@ -93,8 +99,8 @@ export const Playground = ({ randomLetter, onRestart }) => {
   return (
     <div className="container">
       <div className={`playground ${inactivePlayground}`}>
-        <h3>{timer}</h3>
-        <h4>You won {win} times</h4>
+        <h3>Play in {timer} seconds!</h3>
+
         <h2 className={classname}>{message}</h2>
         {restartBtn}
         {playground.map((row, rowIndex) => (
