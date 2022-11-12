@@ -73,7 +73,6 @@ function App() {
   }
 
   function countVictories(win) {
-    console.log(win);
     win = localStorage.getItem("total_victories");
     if (win === null) {
       win = 0;
