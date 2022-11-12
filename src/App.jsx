@@ -45,8 +45,8 @@ function App() {
             Find all <span>{randomLetter}</span> letters!
           </h1>
           <h4>
-            You won <span>{localStorage.getItem("total_victories")}</span>{" "}
-            times. <br />
+            You won <span>{localStorage.getItem("total_victories")}</span>
+            &nbsp;times. <br />
             Total games: <span>{totalGamesCounter}</span>
           </h4>
         </div>
@@ -64,7 +64,6 @@ function App() {
   }
 
   function playAgain(restart) {
-    console.log(restart);
     if (restart) {
       setRestartGame((restartGame = !restartGame));
       setBeginGame(false);
